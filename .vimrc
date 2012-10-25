@@ -46,9 +46,9 @@ set ttyfast
 set laststatus=2
 " Relative numbering instead of line numbering, use the ruler instead for
 " absolute.
-set relativenumber
+silent! set relativenumber
 " Creates an undofile that lets you conduct undoes after close and reopen.
-set undofile
+silent! set undofile
 " Makes searching better
 set ignorecase
 " Overrides ignorecase if uppercase characters are used in a search.
@@ -71,7 +71,7 @@ set wrap
 set textwidth=79
 " See :help fo-table
 set formatoptions=qrn1
-set colorcolumn=85
+silent! set colorcolumn=85
 
 " Automatically save current editor after tabbing away.
 " au FocusLost * :wa

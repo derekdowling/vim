@@ -1,3 +1,7 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =1
+let g:netrw_dirhist_cnt =5
 let g:netrw_dirhist_1='/Users/jacob/Desktop/FitnessCalc'
+let g:netrw_dirhist_2='/afs/ualberta.ca/home/j/s/js22/.vim'
+let g:netrw_dirhist_3='/afs/ualberta.ca/home/j/s/js22/.vim/bundle'
+let g:netrw_dirhist_4='/afs/ualberta.ca/home/j/s/js22/.vim'
+let g:netrw_dirhist_5='/afs/ualberta.ca/home/j/s/js22'
