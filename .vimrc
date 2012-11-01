@@ -1,14 +1,18 @@
 " Makes the mapleader not so crappy.
 let mapleader = ","
 
+" Enable filetype specific configuration by placing files into
+" ftplugin/{js,py,rb,etc}.vim
+filetype on
+
 " Note: for making terminal colors work in OSX:
 " http://stackoverflow.com/questions/3761770/iterm-vim-colorscheme-not-working
 
 " INDENTATION
 set ai
-set ts=4 
-set sts=4 
-set sw=4
+set ts=2 
+set sts=2 
+set sw=2
 set mouse=a
 set number
 set hidden
@@ -77,3 +81,19 @@ silent! set colorcolumn=85
 " au FocusLost * :wa
 "
 nmap <silent><leader>f <c-p>
+
+" Toggle syntax numbering
+function! ToggleNumber()
+    if(&relativenumber)
+        set number
+    else
+        set relativenumber
+    endif
+endfunction
+nmap <silent><leader>l :call ToggleNumber()<CR>
+
+" Shift tab dedent
+nnoremap <s-tab> <<
+
+" Quit with ,q
+nmap <silent> <leader>q :q<CR>
