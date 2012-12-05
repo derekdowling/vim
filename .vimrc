@@ -1,3 +1,10 @@
+" Installing vimballs
+" open it in vim and type :source %
+
+" For powerline
+set encoding=utf-8
+let g:Powerline_symbols = 'unicode'
+
 " Makes the mapleader not so crappy.
 let mapleader = ","
 
@@ -13,7 +20,7 @@ set ai
 set ts=2 
 set sts=2 
 set sw=2
-set mouse=a
+"set mouse=a
 set number
 set hidden
 set expandtab
@@ -92,8 +99,61 @@ function! ToggleNumber()
 endfunction
 nmap <silent><leader>l :call ToggleNumber()<CR>
 
+" Toggle paste mode
+function! TogglePaste()
+    if(&paste)
+        set nopaste
+    else
+        set paste
+    endif
+endfunction
+nmap <silent><leader>p :call TogglePaste()<CR>
+
 " Shift tab dedent
 nnoremap <s-tab> <<
 
 " Quit with ,q
 nmap <silent> <leader>q :q<CR>
+
+" Map omnicompletion to jk 
+inoremap jk <c-x><c-o>
+
+" Markdown heading generation
+nnoremap <leader>H yyp :s/./#/<cr> :noh<cr>
+" Subheading
+nnoremap <leader>sH yyp :s/./-/<cr> :noh<cr>
+
+" Execute line under cursor - useful when editing these damn things.
+nnoremap <leader>e yy :<c-r>"<cr>k
+
+" Bufsurf forward and back in history
+nnoremap <leader>a :BufSurfBack<CR>
+nnoremap <leader>s :BufSurfForward<CR>
+
+" Change paste "_ sets buffer to blackhole buffer, <C-R> loads register contents.
+" We assume the default register.
+nmap <silent> cp "_cw<C-R>"<Esc>
+
+" Add php highlighting to Phakefiles
+au BufNewFile,BufRead Phakefile set filetype=php
+map <Leader>rt :!ctags --extra=+f --exclude=.git --exclude=log -R * `rvm gemdir`/gems/*<CR><CR>
+
+" Disable numbering for easier copy and paste
+" mnemonic: mouse disable
+nnoremap <leader>md :set mouse=r<cr> :set nonumber<cr> :set norelativenumber<cr> 
+" mnemonic: mouse visual
+nnoremap <leader>mv :set mouse=a<cr> :set relativenumber<cr>
+
+" mouse all
+nnoremap <leader>ma :set mouse=a<cr>
+" mouse none
+nnoremap <leader>mn :set mouse=r<cr>
+
+" Rainbow paren
+nnoremap <leader>R :RainbowParenthesesToggle<cr>
+
+" Change variable to object notation for php
+nnoremap <leader>vo mZ viW :s/\v\$(.*)\[\'(.*)\'\]/$\1->\2/ <cr><esc>`Z:noh<cr>
+" Change variable to array notation for php
+nnoremap <leader>va mZ viW :s/\v\$([^\ \=]*)-\>([^\ \=]*)/$\1['\2']/ <cr><esc>`Z:noh<cr>
+" ca is used in nerdcommenter for chaning comment tupes.
