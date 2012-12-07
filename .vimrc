@@ -1,14 +1,18 @@
 " Jacob Straszynski's .zshrc
 "
 " Note: sure where a setting is being configured? `verbose set modeline?` for
-" example.
+" example. `verbose map ,e' also works.
 "
 " Note: when committing this repo, sometimes the various git-managed submodules
 " turn out to have local changes that cause persistent untracked content
 " warnings in git (you keep seeing an uncomitted file that stubbornly refuses
 " to commit)
+"
 " See:
 " http://stackoverflow.com/questions/7993413/git-submodules-with-modified-and-untracked-content-why-and-how-to-remove-it
+"
+" Related:
+" http://stackoverflow.com/questions/5127178/gitignore-files-added-inside-git-submodules
 "
 " Installing vimballs
 " open it in vim and type :source %
@@ -97,7 +101,7 @@ set gdefault
 set incsearch
 " Briefy jump to matching closing brackets.
 " set showmatch super annoying
-set hlsearch
+set nohlsearch
 " Use perl style regex instead of vims goofiness
 nnoremap / /\v
 vnoremap / /\v
@@ -138,8 +142,8 @@ nmap <silent><leader>p :call TogglePaste()<CR>
 " Shift tab dedent
 nnoremap <s-tab> <<
 
-" Quit with ,q
-nmap <silent> <leader>q :q<CR>
+" Close the current buffer.
+nmap <silent> <leader>q :bdelete<CR>
 
 " Map omnicompletion to jk 
 inoremap jk <c-x><c-o>
@@ -150,7 +154,9 @@ nnoremap <leader>H yyp :s/./#/<cr> :noh<cr>
 nnoremap <leader>sH yyp :s/./-/<cr> :noh<cr>
 
 " Execute line under cursor - useful when editing these damn things.
-nnoremap <leader>e yy :<c-r>"<cr>k
+" nnoremap <leader>e yy :<c-r>"<cr>k
+" This is better, just source the file.
+nnoremap <leader>e :so %<cr>
 
 " Bufsurf forward and back in history
 nnoremap <leader>a :BufSurfBack<CR>
@@ -186,3 +192,22 @@ nnoremap <leader>va mZ viW :s/\v\$([^\ \=]*)-\>([^\ \=]*)/$\1['\2']/ <cr><esc>`Z
 let g:xml_syntax_folding=1
 au FileType glade setlocal foldmethod=syntax
 
+au BufRead,BufNewFile *.aliases set filetype=zsh
+
+" Show what you've changed in this buffer.
+function! s:DiffWithSaved()
+  let filetype=&ft
+  diffthis
+  vnew | r # | normal! 1Gdd
+  diffthis
+  exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
+endfunction
+com! DiffSaved call s:DiffWithSaved()
+
+" bufferdiff
+nnoremap <leader>bd :DiffSaved<cr>
+" close the diff buffer, the last <C-O> closes the other windows. 
+nnoremap <leader>bo :diffoff<cr><C-W><C-O>
+
+" edit the .vimrc file rapidly
+nnoremap <leader>vr :e ~/.vimrc<cr>
