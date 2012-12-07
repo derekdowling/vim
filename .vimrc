@@ -1,7 +1,14 @@
 " Jacob Straszynski's .zshrc
 "
-" Note sure where a setting is being configured? `verbose set modeline?` for
+" Note: sure where a setting is being configured? `verbose set modeline?` for
 " example.
+"
+" Note: when committing this repo, sometimes the various git-managed submodules
+" turn out to have local changes that cause persistent untracked content
+" warnings in git (you keep seeing an uncomitted file that stubbornly refuses
+" to commit)
+" See:
+" http://stackoverflow.com/questions/7993413/git-submodules-with-modified-and-untracked-content-why-and-how-to-remove-it
 "
 " Installing vimballs
 " open it in vim and type :source %
