@@ -1,7 +1,12 @@
+" Jacob Straszynski's .zshrc
+"
+" Note sure where a setting is being configured? `verbose set modeline?` for
+" example.
+"
 " Installing vimballs
 " open it in vim and type :source %
 
-" For powerline
+" For powerline see: https://github.com/Lokaltog/vim-powerline
 set encoding=utf-8
 let g:Powerline_symbols = 'unicode'
 
@@ -9,13 +14,13 @@ let g:Powerline_symbols = 'unicode'
 let mapleader = ","
 
 " Enable filetype specific configuration by placing files into
-" ftplugin/{js,py,rb,etc}.vim
+" .vim/ftplugin/{js,py,rb,etc}.vim
 filetype on
 
 " Note: for making terminal colors work in OSX:
 " http://stackoverflow.com/questions/3761770/iterm-vim-colorscheme-not-working
 
-" INDENTATION
+" INDENTATION and syntax 
 set ai
 set ts=2 
 set sts=2 
@@ -30,6 +35,8 @@ colorscheme molokai
 call pathogen#infect()
 filetype plugin indent on
 au BufWritePost *.coffee silent CoffeeMake! -b | cwindow | redraw!
+" I have an aliases file with some login aliases.
+au BufNewFile,BufRead .*aliases set filetype=sh
 
 "http://stackoverflow.com/questions/526858/how-do-i-make-vim-do-normal-bash-like-tab-completion-for-file-names
 set wildmode=longest,list,full
@@ -38,16 +45,29 @@ set wildmenu
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! %!sudo tee > /dev/null %
 set backspace=indent,eol,start
+
+" CtrlP Settings
+" Instructions on ctrlp site, not sure what it's for:
+" http://kien.github.com/ctrlp.vim/
 set runtimepath^=~/.vim/bundle/ctrlp.vim
-" Toggle NERDTree with \t
+" Clear highlights from incsearch. using ,<space>
+nnoremap <leader><space> :noh<cr>
+" Ignore hidden directories because they usually slow things down.
+let g:ctrlp_custom_ignore = {
+      \ 'dir': '\v[\/]\..*$'
+      \ }
+
+" Toggle NERDTree with ,t
 nmap <silent> <leader>t :NERDTreeToggle<CR>
 nmap <silent> <leader>r :NERDTreeFind<CR>
+
 " Get rid of stuff that makes VIM vi compatible that is apparrently crappy?
 " See http://stevelosh.com/blog/2010/09/coming-home-to-vim/#using-the-leader
 set nocompatible
-" Security fix
+" Security fix - remove modeline support.
 set modelines=0
 
+" Various display options.
 set ruler
 set showmode
 set showcmd
@@ -74,8 +94,7 @@ set hlsearch
 " Use perl style regex instead of vims goofiness
 nnoremap / /\v
 vnoremap / /\v
-" Clear highlights from incsearch. using ,<space>
-nnoremap <leader><space> :noh<cr>
+
 
 " Column wrapping
 set wrap
@@ -157,3 +176,6 @@ nnoremap <leader>vo mZ viW :s/\v\$(.*)\[\'(.*)\'\]/$\1->\2/ <cr><esc>`Z:noh<cr>
 " Change variable to array notation for php
 nnoremap <leader>va mZ viW :s/\v\$([^\ \=]*)-\>([^\ \=]*)/$\1['\2']/ <cr><esc>`Z:noh<cr>
 " ca is used in nerdcommenter for chaning comment tupes.
+let g:xml_syntax_folding=1
+au FileType glade setlocal foldmethod=syntax
+
