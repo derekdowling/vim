@@ -195,7 +195,7 @@ nnoremap <leader>R :RainbowParenthesesToggle<cr>
 nnoremap <leader>vo mZ viW :s/\v\$(.*)\[\'(.*)\'\]/$\1->\2/ <cr><esc>`Z:noh<cr>
 " Change variable to array notation for php
 nnoremap <leader>va mZ viW :s/\v\$([^\ \=]*)-\>([^\ \=]*)/$\1['\2']/ <cr><esc>`Z:noh<cr>
-" ca is used in nerdcommenter for chaning comment tupes.
+" ca is used in nerdcommenter for changing comment types.
 let g:xml_syntax_folding=1
 au FileType glade setlocal foldmethod=syntax
 
