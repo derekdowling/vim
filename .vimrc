@@ -31,6 +31,8 @@ filetype on
 " Note: for making terminal colors work in OSX:
 " http://stackoverflow.com/questions/3761770/iterm-vim-colorscheme-not-working
 
+set noswapfile
+
 " INDENTATION and syntax 
 set ai
 set ts=2 
@@ -64,8 +66,9 @@ set runtimepath^=~/.vim/bundle/ctrlp.vim
 " Clear highlights from incsearch. using ,<space>
 nnoremap <leader><space> :noh<cr>
 " Ignore hidden directories because they usually slow things down.
+" Unless I'm in dotfiles.
 let g:ctrlp_custom_ignore = {
-      \ 'dir': '\v[\/]\..*$'
+      \ 'dir': '\v\.(dotfiles)@!(.*)$'
       \ }
 
 " Toggle NERDTree with ,t
@@ -103,8 +106,11 @@ set incsearch
 " set showmatch super annoying
 set nohlsearch
 " Use perl style regex instead of vims goofiness
-nnoremap / /\v
-vnoremap / /\v
+" These are annoying because they make me unable to refer to the search
+" http://stackoverflow.com/questions/1497958/how-to-use-vim-registers
+" register.
+" nnoremap / /\v
+" vnoremap / /\v
 
 
 " Column wrapping
@@ -168,7 +174,8 @@ nmap <silent> cp "_ciw<C-R>"<Esc>
 
 " Add php highlighting to Phakefiles
 au BufNewFile,BufRead Phakefile set filetype=php
-map <Leader>rt :!ctags --extra=+f --exclude=.git --exclude=log -R * `rvm gemdir`/gems/*<CR><CR>
+" ReGenerate Tags 
+map <Leader>rgt :!ctags --extra=+f --exclude=.git --exclude=log -R * <CR><CR>
 
 " Disable numbering for easier copy and paste
 " mnemonic: mouse disable
