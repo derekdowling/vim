@@ -164,7 +164,7 @@ nnoremap <leader>s :BufSurfForward<CR>
 
 " Change paste "_ sets buffer to blackhole buffer, <C-R> loads register contents.
 " We assume the default register.
-nmap <silent> cp "_cw<C-R>"<Esc>
+nmap <silent> cp "_ciw<C-R>"<Esc>
 
 " Add php highlighting to Phakefiles
 au BufNewFile,BufRead Phakefile set filetype=php
