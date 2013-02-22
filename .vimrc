@@ -16,6 +16,9 @@
 "
 " Installing vimballs
 " open it in vim and type :source %
+" Todo: Set single swap file directory.
+set directory=$HOME/.vim/tmp
+set undodir=$HOME/.vim/tmp
 
 " For powerline see: https://github.com/Lokaltog/vim-powerline
 set encoding=utf-8
@@ -47,7 +50,8 @@ syntax on
 colorscheme molokai
 call pathogen#infect()
 filetype plugin indent on
-au BufWritePost *.coffee silent CoffeeMake! -b | cwindow | redraw!
+" Using cake dev command from express-coffescript project instead.
+" au BufWritePost *.coffee silent CoffeeMake! -b | cwindow | redraw!
 " I have an aliases file with some login aliases.
 au BufNewFile,BufRead .*aliases set filetype=sh
 
@@ -218,3 +222,11 @@ nnoremap <leader>bo :diffoff<cr><C-W><C-O>
 
 " edit the .vimrc file rapidly
 nnoremap <leader>vr :e ~/.vimrc<cr>
+
+set clipboard=unnamed
+
+" Create a scrolling boundary of 5 lines from teh top of the screen.
+set so=5
+
+" Don't add eol.
+set noeol
