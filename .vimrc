@@ -75,6 +75,10 @@ let g:ctrlp_custom_ignore = {
       \ 'dir': '\v\.(dotfiles)@!(.*)$'
       \ }
 
+" Add line without insert above/below
+nnoremap <leader>O :<C-U>call append(line(".") -1, repeat([''], v:count1))<CR>
+nnoremap <leader>o :<C-U>call append(line("."), repeat([''], v:count1))<CR>
+
 " Toggle NERDTree with ,t
 nmap <silent> <leader>t :NERDTreeToggle<CR>
 nmap <silent> <leader>r :NERDTreeFind<CR>
@@ -151,6 +155,13 @@ nmap <silent><leader>p :call TogglePaste()<CR>
 
 " Shift tab dedent
 nnoremap <s-tab> <<
+
+" Nice hack for exiting a mode
+inoremap jj <Esc>
+
+" Paste From Buffer
+nnoremap <leader><leader>p "*p
+nnoremap <leader><leader>P "*P
 
 " Close the current buffer.
 nmap <silent> <leader>q :bdelete<CR>
