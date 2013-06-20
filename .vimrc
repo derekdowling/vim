@@ -16,9 +16,6 @@
 "
 " Installing vimballs
 " open it in vim and type :source %
-" Todo: Set single swap file directory.
-set directory=$HOME/.vim/tmp
-set undodir=$HOME/.vim/tmp
 
 " For powerline see: https://github.com/Lokaltog/vim-powerline
 set encoding=utf-8
@@ -34,17 +31,19 @@ filetype on
 " Note: for making terminal colors work in OSX:
 " http://stackoverflow.com/questions/3761770/iterm-vim-colorscheme-not-working
 
-set noswapfile
 
-" INDENTATION and syntax 
+" INDENTATION and syntax
 set ai
-set ts=2 
-set sts=2 
+set ts=2
+set sts=2
 set sw=2
-"set mouse=a
+set mouse=a
 set number
 set hidden
 set expandtab
+" Allows selection of splits via mouse.
+set ttymouse=xterm2
+
 syntax reset
 syntax on
 colorscheme molokai
@@ -70,10 +69,15 @@ set runtimepath^=~/.vim/bundle/ctrlp.vim
 " Clear highlights from incsearch. using ,<space>
 nnoremap <leader><space> :noh<cr>
 " Ignore hidden directories because they usually slow things down.
-" Unless I'm in dotfiles.
-let g:ctrlp_custom_ignore = {
-      \ 'dir': '\v\.(dotfiles)@!(.*)$'
-      \ }
+" Unless I'm in dotfiles
+" Was using this formerly:
+let g:ctrlp_custom_ignore = '\v[\/](Documents|Desktop|Downloads|Dropbox|Library|
+\Music|Google\ Drive|Dropbox|Pictures|\.git|\.hg|\.svn|.Trash|tmp|venv|projectenv|static)'
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_max_depth = 5
+nnoremap <leader>F :CtrlP<CR>
+nnoremap <leader>f :CtrlPCurWD<CR>
+
 
 " Add line without insert above/below
 nnoremap <leader>O :<C-U>call append(line(".") -1, repeat([''], v:count1))<CR>
@@ -87,7 +91,7 @@ nmap <silent> <leader>r :NERDTreeFind<CR>
 " See http://stevelosh.com/blog/2010/09/coming-home-to-vim/#using-the-leader
 set nocompatible
 " Security fix - remove modeline support.
-set modelines=0
+set modelines=1
 
 " Various display options.
 set ruler
@@ -102,6 +106,11 @@ set laststatus=2
 silent! set relativenumber
 " Creates an undofile that lets you conduct undoes after close and reopen.
 silent! set undofile
+" I don't like these.
+silent! set noswapfile
+set directory=$HOME/.vimtmp
+set undodir=$HOME/.vimtmp
+
 " Makes searching better
 set ignorecase
 " Overrides ignorecase if uppercase characters are used in a search.
@@ -117,8 +126,8 @@ set nohlsearch
 " These are annoying because they make me unable to refer to the search
 " http://stackoverflow.com/questions/1497958/how-to-use-vim-registers
 " register.
-" nnoremap / /\v
-" vnoremap / /\v
+nnoremap / /\v
+vnoremap / /\v
 
 
 " Column wrapping
@@ -131,8 +140,7 @@ silent! set colorcolumn=85
 " Automatically save current editor after tabbing away.
 " au FocusLost * :wa
 "
-nmap <silent><leader>f <c-p>
-
+"
 " Toggle syntax numbering
 function! ToggleNumber()
     if(&relativenumber)
@@ -166,8 +174,8 @@ nnoremap <leader><leader>P "*P
 " Close the current buffer.
 nmap <silent> <leader>q :bdelete<CR>
 
-" Map omnicompletion to jk 
-inoremap jk <c-x><c-o>
+" Map omnicompletion to jk
+" inoremap jk <c-x><c-o>
 
 " Markdown heading generation
 nnoremap <leader>H yyp :s/./#/<cr> :noh<cr>
@@ -189,7 +197,7 @@ nmap <silent> cp "_ciw<C-R>"<Esc>
 
 " Add php highlighting to Phakefiles
 au BufNewFile,BufRead Phakefile set filetype=php
-" ReGenerate Tags 
+" ReGenerate Tags
 map <Leader>rgt :!ctags --extra=+f --exclude=.git --exclude=log -R * <CR><CR>
 
 " Disable numbering for easier copy and paste
@@ -236,8 +244,40 @@ nnoremap <leader>vr :e ~/.vimrc<cr>
 
 set clipboard=unnamed
 
-" Create a scrolling boundary of 5 lines from teh top of the screen.
+" Create a scrolling boundary of 5 lines from the top of the screen.
 set so=5
 
 " Don't add eol.
 set noeol
+
+" Open tagbar.
+nnoremap <leader>T :TagbarToggle<CR>
+
+" Highlight trailing whitespace
+let c_space_errors=1
+highlight ExtraWhitespace ctermbg=red guibg=red
+au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+au InsertLeave * match ExtraWhitespace /\s\+$/
+match ExtraWhitespace /\s\+$/
+
+" Search Dash for word under cursor
+function! SearchDash()
+  let s:browser = "/usr/bin/open"
+  let s:wordUnderCursor = expand("<cword>")
+  let s:url = "dash://".s:wordUnderCursor
+  let s:cmd ="silent ! " . s:browser . " " . s:url
+  execute s:cmd
+  redraw!
+endfunction
+map <leader>d :call SearchDash()<CR>
+
+" Clipboard
+
+vmap <leader>m :w !pbcopy<CR><CR>
+vmap <leader>M :!pbaste<CR>
+nnoremap <leader>m :w !pbcopy<CR><CR>
+
+" Replace trailing whitespace empty lines
+nnoremap <leader>re /\v^([ ]{1,})([^ \t]{1,})@!$<cr>d$
+
+let @q = '/MEDIA_URLda}da}i{% sttai€kb€kb€kbatic "f"i" %}'
