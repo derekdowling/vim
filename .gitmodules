@@ -67,3 +67,9 @@
 [submodule "bundle/vim-textobj-user"]
 	path = bundle/vim-textobj-user
 	url = git@github.com:kana/vim-textobj-user.git
+[submodule "bundle/matchtag"]
+	path = bundle/matchtag
+	url = git@github.com:gregsexton/MatchTag.git
+[submodule "bundle/youcompleteme"]
+	path = bundle/youcompleteme
+	url = git://github.com/Valloric/YouCompleteMe.git
