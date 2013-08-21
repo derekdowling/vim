@@ -1,4 +1,4 @@
-" Jacob Straszynski's .zshrc
+" Derek Dowling's vimrc
 "
 " Note: sure where a setting is being configured? `verbose set modeline?` for
 " example. `verbose map ,e' also works.
@@ -50,6 +50,10 @@ syntax on
 colorscheme molokai
 call pathogen#infect()
 filetype plugin indent on
+
+" Turn Mouse God Mode On For Terminal Vim
+set mouse=a
+
 " Using cake dev command from express-coffescript project instead.
 " au BufWritePost *.coffee silent CoffeeMake! -b | cwindow | redraw!
 " I have an aliases file with some login aliases.
@@ -78,6 +82,12 @@ let g:ctrlp_custom_ignore = {
 " Add line without insert above/below
 nnoremap <leader>O :<C-U>call append(line(".") -1, repeat([''], v:count1))<CR>
 nnoremap <leader>o :<C-U>call append(line("."), repeat([''], v:count1))<CR>
+
+" Some custome movement bindings I like
+nnoremap H 0
+nnoremap J 15j
+nnoremap K 15k
+nnoremap L $
 
 " Toggle NERDTree with ,t
 nmap <silent> <leader>t :NERDTreeToggle<CR>
@@ -142,16 +152,6 @@ function! ToggleNumber()
     endif
 endfunction
 nmap <silent><leader>l :call ToggleNumber()<CR>
-
-" Toggle paste mode
-function! TogglePaste()
-    if(&paste)
-        set nopaste
-    else
-        set paste
-    endif
-endfunction
-nmap <silent><leader>p :call TogglePaste()<CR>
 
 " Shift tab dedent
 nnoremap <s-tab> <<
@@ -241,3 +241,12 @@ set so=5
 
 " Don't add eol.
 set noeol
+
+" NERDTree Tabs Config
+map <Leader>n <plug>NERDTreeTabsToggle<CR>
+" Focus File Tree if folder opened, file, if file opened
+let g:nerdtree_tabs_smart_startup_focus=1
+let g:nerdtree_tabs_open_on_new_tab=1
+" Close current tab if there is only one window in it and it's NERDTree
+let g:nerdtree_tabs_autoclose=1
+
