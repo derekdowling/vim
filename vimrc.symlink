@@ -54,6 +54,9 @@ filetype plugin indent on
 " Turn Mouse God Mode On For Terminal Vim
 set mouse=a
 
+" Ctrl+c yanks to system clipboard
+vmap <leader><C-c> "+y<CR>
+
 " Using cake dev command from express-coffescript project instead.
 " au BufWritePost *.coffee silent CoffeeMake! -b | cwindow | redraw!
 " I have an aliases file with some login aliases.
@@ -196,7 +199,7 @@ map <Leader>rgt :!ctags --extra=+f --exclude=.git --exclude=log -R * <CR><CR>
 " mnemonic: mouse disable
 nnoremap <leader>md :set mouse=r<cr> :set nonumber<cr> :set norelativenumber<cr> 
 " mnemonic: mouse visual
-nnoremap <leader>mv :set mouse=a<cr> :set relativenumber<cr>
+nnoremap <leader>mv :set mouse=v<cr> :set relativenumber<cr>
 
 " mouse all
 nnoremap <leader>ma :set mouse=a<cr>
@@ -250,3 +253,6 @@ let g:nerdtree_tabs_open_on_new_tab=1
 " Close current tab if there is only one window in it and it's NERDTree
 let g:nerdtree_tabs_autoclose=1
 
+:autocmd BufReadPost * :DetectIndent
+:let g:detectindent_preferred_expandtab=1
+:let g:detectindent_preferred_indent=2
