@@ -54,9 +54,6 @@ filetype plugin indent on
 " Turn Mouse God Mode On For Terminal Vim
 set mouse=a
 
-" Ctrl+c yanks to system clipboard
-vmap <leader><C-c> "+y<CR>
-
 " Using cake dev command from express-coffescript project instead.
 " au BufWritePost *.coffee silent CoffeeMake! -b | cwindow | redraw!
 " I have an aliases file with some login aliases.
@@ -162,10 +159,6 @@ nnoremap <s-tab> <<
 " Nice hack for exiting a mode
 inoremap jj <Esc>
 
-" Paste From Buffer
-nnoremap <leader><leader>p "*p
-nnoremap <leader><leader>P "*P
-
 " Close the current buffer.
 nmap <silent> <leader>q :bdelete<CR>
 
@@ -197,14 +190,21 @@ map <Leader>rgt :!ctags --extra=+f --exclude=.git --exclude=log -R * <CR><CR>
 
 " Disable numbering for easier copy and paste
 " mnemonic: mouse disable
-nnoremap <leader>md :set mouse=r<cr> :set nonumber<cr> :set norelativenumber<cr> 
+" nnoremap <leader>md :set mouse=r<cr> :set nonumber<cr> :set norelativenumber<cr>
 " mnemonic: mouse visual
-nnoremap <leader>mv :set mouse=v<cr> :set relativenumber<cr>
-
+"nnoremap <leader>mv :set mouse=v<cr> :set relativenumber<cr>
 " mouse all
-nnoremap <leader>ma :set mouse=a<cr>
+nnoremap <leader>m :set mouse=a<cr>
 " mouse none
-nnoremap <leader>mn :set mouse=r<cr>
+nnoremap <leader>M :set mouse=r<cr>
+
+" Buffer
+noremap <leader>y "*y 
+noremap <leader>p "*p 
+noremap <leader>P "*P 
+noremap <leader>dd "*dd
+vnoremap <leader>yy "*yy 
+vnoremap <leader>d "*d 
 
 " Rainbow paren
 nnoremap <leader>R :RainbowParenthesesToggle<cr>
@@ -237,7 +237,6 @@ nnoremap <leader>bo :diffoff<cr><C-W><C-O>
 " edit the .vimrc file rapidly
 nnoremap <leader>vr :e ~/.vimrc<cr>
 
-set clipboard=unnamed
 
 " Create a scrolling boundary of 5 lines from teh top of the screen.
 set so=5
@@ -248,6 +247,7 @@ set noeol
 " NERDTree Tabs Config
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
 " Focus File Tree if folder opened, file, if file opened
+let g:nerdtree_tabs_open_on_console_startup=1
 let g:nerdtree_tabs_smart_startup_focus=1
 let g:nerdtree_tabs_open_on_new_tab=1
 " Close current tab if there is only one window in it and it's NERDTree
