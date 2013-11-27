@@ -93,6 +93,9 @@ nnoremap L $
 nmap <silent> <leader>t :NERDTreeToggle<CR>
 nmap <silent> <leader>r :NERDTreeFind<CR>
 
+" NERDCommenter Settings
+let NERDSpaceDelims=1 " place spaces after comment chars
+
 " Get rid of stuff that makes VIM vi compatible that is apparrently crappy?
 " See http://stevelosh.com/blog/2010/09/coming-home-to-vim/#using-the-leader
 set nocompatible
