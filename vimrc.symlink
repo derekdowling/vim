@@ -32,7 +32,7 @@ let mapleader = ","
 filetype on
 
 " turns on syntastic for php and style checkers
-let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
+let g:syntastic_php_checkers = ['php', 'phpcs'] ", 'phpmd']
 let g:syntastic_aggregate_errors = 1
 " let g:syntastic_quiet_messages = { "type": "style" }
 
@@ -43,9 +43,9 @@ set noswapfile
 
 " INDENTATION and syntax 
 set ai
-set ts=2 
-set sts=2 
-set sw=2
+set ts=4 
+set sts=4 
+set sw=4
 "set mouse=a
 set number
 set hidden
