@@ -14,15 +14,11 @@
 " Related:
 " http://stackoverflow.com/questions/5127178/gitignore-files-added-inside-git-submodules
 "
-" Installing vimballs
-" open it in vim and type :source %
-" Todo: Set single swap file directory.
-set directory=$HOME/.vim/tmp
-set undodir=$HOME/.vim/tmp
-
-" For powerline see: https://github.com/Lokaltog/vim-powerline
+" For powerline see: https://github.com/Lokaltog/powerline
 set encoding=utf-8
-let g:Powerline_symbols = 'unicode'
+python from powerline.vim import setup as powerline_setup
+python powerline_setup()
+python del powerline_setup
 
 " Makes the mapleader not so crappy.
 let mapleader = ","
@@ -51,8 +47,11 @@ set number
 set hidden
 set expandtab
 syntax reset
+" Color Scheme
 syntax on
-colorscheme molokai
+set t_Co=256
+set background=dark
+colorscheme sexy-railscasts-256
 call pathogen#infect()
 filetype plugin indent on
 
@@ -84,11 +83,11 @@ let g:ctrlp_custom_ignore = {
       \ 'dir': '\v\.(dotfiles)@!(.*)$'
       \ }
 
-" Add line without insert above/below
+" Add line without toggling insert mode above/below current line
 nnoremap <leader>O :<C-U>call append(line(".") -1, repeat([''], v:count1))<CR>
 nnoremap <leader>o :<C-U>call append(line("."), repeat([''], v:count1))<CR>
 
-" Some custome movement bindings I like
+" Some custom movement bindings I like
 nnoremap H 0
 nnoremap J 15j
 nnoremap K 15k
@@ -122,8 +121,6 @@ silent! set relativenumber
 silent! set undofile
 " Makes searching better
 set ignorecase
-" Overrides ignorecase if uppercase characters are used in a search.
-set smartcase
 " Global substitution on by default. g now reverts to single sub.
 set gdefault
 " Starts to highlight partial search results.
@@ -131,13 +128,6 @@ set incsearch
 " Briefy jump to matching closing brackets.
 " set showmatch super annoying
 set nohlsearch
-" Use perl style regex instead of vims goofiness
-" These are annoying because they make me unable to refer to the search
-" http://stackoverflow.com/questions/1497958/how-to-use-vim-registers
-" register.
-" nnoremap / /\v
-" vnoremap / /\v
-
 
 " Column wrapping
 set wrap
@@ -146,9 +136,6 @@ set textwidth=79
 set formatoptions=qrn1
 silent! set colorcolumn=85
 
-" Automatically save current editor after tabbing away.
-" au FocusLost * :wa
-"
 nmap <silent><leader>f <c-p>
 
 " Toggle syntax numbering
@@ -170,31 +157,12 @@ inoremap jj <Esc>
 " Close the current buffer.
 nmap <silent> <leader>q :bdelete<CR>
 
-" Map omnicompletion to jk 
-inoremap jk <c-x><c-o>
-
-" Markdown heading generation
-nnoremap <leader>H yyp :s/./#/<cr> :noh<cr>
-" Subheading
-nnoremap <leader>sH yyp :s/./-/<cr> :noh<cr>
-
-" Execute line under cursor - useful when editing these damn things.
-" nnoremap <leader>e yy :<c-r>"<cr>k
-" This is better, just source the file.
-nnoremap <leader>e :so %<cr>
-
-" Bufsurf forward and back in history
-nnoremap <leader>a :BufSurfBack<CR>
-nnoremap <leader>s :BufSurfForward<CR>
-
 " Change paste "_ sets buffer to blackhole buffer, <C-R> loads register contents.
 " We assume the default register.
 nmap <silent> cp "_ciw<C-R>"<Esc>
 
 " Add php highlighting to Phakefiles
 au BufNewFile,BufRead Phakefile set filetype=php
-" ReGenerate Tags 
-map <Leader>rgt :!ctags --extra=+f --exclude=.git --exclude=log -R * <CR><CR>
 
 " Disable numbering for easier copy and paste
 " mnemonic: mouse disable
@@ -227,26 +195,10 @@ au FileType glade setlocal foldmethod=syntax
 
 au BufRead,BufNewFile *.aliases set filetype=zsh
 
-" Show what you've changed in this buffer.
-function! s:DiffWithSaved()
-  let filetype=&ft
-  diffthis
-  vnew | r # | normal! 1Gdd
-  diffthis
-  exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
-endfunction
-com! DiffSaved call s:DiffWithSaved()
-
-" bufferdiff
-nnoremap <leader>bd :DiffSaved<cr>
-" close the diff buffer, the last <C-O> closes the other windows. 
-nnoremap <leader>bo :diffoff<cr><C-W><C-O>
-
 " edit the .vimrc file rapidly
 nnoremap <leader>vr :e ~/.vimrc<cr>
 
-
-" Create a scrolling boundary of 5 lines from teh top of the screen.
+" Create a scrolling boundary of 5 lines from top of the screen
 set so=5
 
 " Don't add eol.
@@ -254,13 +206,15 @@ set noeol
 
 " NERDTree Tabs Config
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
+
 " Focus File Tree if folder opened, file, if file opened
 let g:nerdtree_tabs_open_on_console_startup=1
 let g:nerdtree_tabs_smart_startup_focus=1
 let g:nerdtree_tabs_open_on_new_tab=1
+
 " Close current tab if there is only one window in it and it's NERDTree
 let g:nerdtree_tabs_autoclose=1
 
 :autocmd BufReadPost * :DetectIndent
 :let g:detectindent_preferred_expandtab=1
-:let g:detectindent_preferred_indent=2
+:let g:detectindent_preferred_indent=4
